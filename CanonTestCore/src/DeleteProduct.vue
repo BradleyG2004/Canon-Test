@@ -9,7 +9,7 @@
       </p>
       <div class="actions">
         <button class="btn cancel" @click="emit('close')">Annuler</button>
-        <button class="btn delete" @click="deleteProduct">Supprimer</button>
+        <button class="add" @click="deleteProduct" aria-label="Dlt">Supprimer</button>
       </div>
     </div>
   </div>

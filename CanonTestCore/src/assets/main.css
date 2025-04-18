@@ -26,5 +26,9 @@ a,
     place-items: center;
   }
 
-
+  .add {
+    background-color: crimson;
+    color: white;
+    border-color: crimson;
+  }
 }

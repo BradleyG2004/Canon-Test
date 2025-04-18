@@ -121,7 +121,7 @@
     </nav>
 
     <hr />
-    <button id="add" @click="showCreateForm = !showCreateForm">
+    <button class="add" @click="showCreateForm = !showCreateForm">
       Add a product
     </button>
     <CreateProduct v-if="showCreateForm" @close="onProductCreated" />
@@ -231,11 +231,11 @@ const goToPage = (page) => {
   font-weight: bold;
 }
 
-#add {
+/* #add {
   background-color: crimson;
   color: white;
   border-color: crimson;
-}
+} */
 
 .emobtn {
   border-width: 0px;

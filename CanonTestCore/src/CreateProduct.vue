@@ -53,6 +53,9 @@
           step="any"
           required
         />
+        <span class="text-danger" v-if="errors.price">{{
+          errors.price[0]
+        }}</span>
 
         <label class="control-label"> Poids (kg) </label>
         <input
@@ -63,6 +66,9 @@
           type="number"
           step="any"
         />
+        <span class="text-danger" v-if="errors.weight">{{
+          errors.weight[0]
+        }}</span>
 
         <label class="control-label"> Date de sortie </label>
         <input
@@ -140,11 +146,11 @@
   cursor: pointer;
 }
 
-#add {
+/* #add {
   background-color: crimson;
   color: white;
   border-color: crimson;
-}
+} */
 </style>
 
 <script setup>
@@ -180,6 +186,9 @@ const submitProduct = async () => {
   }
   if (product.value.price <= 0) {
     errors.value.price = ["Le prix doit être supérieur à zéro."];
+  }
+  if (product.value.weight <= 0) {
+    errors.value.weight = ["Le poids doit être supérieur à zéro."];
   }
   if (!product.value.release_date) {
     errors.value.release_date = ["La date de sortie est requise."];

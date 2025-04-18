@@ -53,6 +53,9 @@
           step="any"
           required
         />
+        <span class="text-danger" v-if="errors.price">{{
+          errors.price[0]
+        }}</span>
 
         <label class="control-label"> Poids (kg) </label>
         <input
@@ -63,6 +66,9 @@
           type="number"
           step="any"
         />
+        <span class="text-danger" v-if="errors.weight">{{
+          errors.weight[0]
+        }}</span>
 
         <label class="control-label"> Date de sortie </label>
         <input
@@ -88,7 +94,7 @@
         </select>
 
         <br />
-        <button id="add" type="submit">POST</button>
+        <button class="add" type="submit">POST</button>
       </form>
     </div>
   </div>
@@ -140,11 +146,11 @@
   cursor: pointer;
 }
 
-#add {
+/* #add {
   background-color: crimson;
   color: white;
   border-color: crimson;
-}
+} */
 </style>
 
 <script setup>
