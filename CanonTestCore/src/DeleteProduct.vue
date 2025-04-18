@@ -1,7 +1,7 @@
 <template>
   <div class="overlay">
     <div class="dialog">
-      <button class="close-btn" @click="emit('close')">✖</button>
+      <button class="close-btn" @click="emit('close')" aria-label="Close">✖</button>
       <h2>Supprimer ce produit ?</h2>
       <hr />
       <p>
@@ -32,7 +32,7 @@ const deleteProduct = async () => {
   } catch (error) {
     console.error("Erreur lors de la suppression :", error);
     alert("Une erreur est survenue pendant la suppression.");
-    emit("close"); // Émettre l'événement même en cas d'erreur pour fermer la boîte de dialogue
+    emit("close"); 
   }
 };
 </script>

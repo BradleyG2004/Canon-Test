@@ -1,7 +1,9 @@
 <template>
   <div class="overlay">
     <div class="form-container">
-      <button class="close-btn" @click="emit('close')">✖</button>
+      <button class="close-btn" @click="emit('close')" aria-label="Close">
+        ✖
+      </button>
       <h2 id="title">Update a product</h2>
       <hr />
       <form @submit.prevent="submitProduct">
@@ -146,7 +148,7 @@
 </style>
 
 <script setup>
-import { ref, defineEmits,watch } from "vue";
+import { ref, defineEmits, watch } from "vue";
 import axios from "axios";
 
 const emit = defineEmits(["close"]);
@@ -210,6 +212,9 @@ const submitProduct = async () => {
       errors.value = error.response.data;
     } else {
       console.error("Erreur inattendue :", error);
+      alert(
+        "Une erreur inattendue s'est produite. Veuillez réessayer plus tard."
+      );
     }
   }
 };

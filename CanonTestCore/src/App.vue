@@ -65,6 +65,7 @@
             <button
               class="emobtn"
               title="Update product's informations"
+              aria-label="Update product"
               @click="editProduct(product)"
             >
               ✏️
@@ -73,6 +74,7 @@
             <button
               class="emobtn"
               title="Remove product's informations"
+              aria-label="Delete product"
               @click="deleteProduct(product)"
             >
               🗑️
@@ -144,8 +146,8 @@ import UpdateProduct from "./UpdateProduct.vue";
 import DeleteProduct from "./DeleteProduct.vue";
 
 const products = ref([]);
-const showCreateForm = ref(false);
 
+const showCreateForm = ref(false);
 const showUpdtForm = ref(false);
 const showDltForm = ref(false);
 
@@ -163,14 +165,19 @@ const productToDelete = ref(0);
 const productToEdit = ref(null);
 
 const fetchProducts = () => {
-  axios
-    .get("/api/product/")
-    .then((response) => {
-      products.value = response.data;
-    })
-    .catch((error) => {
-      console.error("Erreur lors de la récupération des données :", error);
-    });
+  try {
+    axios
+      .get("/api/product/")
+      .then((response) => {
+        products.value = response.data;
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération des données :", error);
+      });
+  } catch (error) {
+    console.error("Erreur inattendue :", error);
+    alert("An unexpected error occurred. Please try again later.");
+  }
 };
 
 onMounted(fetchProducts);
