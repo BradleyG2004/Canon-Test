@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="form-container">
       <button class="close-btn" @click="emit('close')">✖</button>
-      <h2 id="title">Create a product</h2>
+      <h2 id="title">Update a product</h2>
       <hr />
       <form @submit.prevent="submitProduct">
         <label class="form-label"> Code produit </label>
@@ -146,10 +146,13 @@
 </style>
 
 <script setup>
-import { ref, defineEmits } from "vue";
+import { ref, defineEmits,watch } from "vue";
 import axios from "axios";
 
 const emit = defineEmits(["close"]);
+const props = defineProps({
+  productToUpdate: Object,
+});
 
 const product = ref({
   product_code: "",
@@ -161,6 +164,16 @@ const product = ref({
   is_available: false,
   created_by: "",
 });
+
+watch(
+  () => props.productToUpdate,
+  (newVal) => {
+    if (newVal) {
+      product.value = { ...newVal };
+    }
+  },
+  { immediate: true }
+);
 
 const errors = ref({});
 
@@ -189,8 +202,8 @@ const submitProduct = async () => {
 
   try {
     console.log("Données envoyées :", product.value);
-    await axios.post("/api/product/", product.value);
-    alert("Produit créé avec succès !");
+    await axios.put(`/api/product/${product.value.id}/`, product.value);
+    alert("Produit modifié avec succès !");
     emit("close");
   } catch (error) {
     if (error.response && error.response.status === 400) {
