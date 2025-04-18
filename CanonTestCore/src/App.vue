@@ -1,6 +1,6 @@
 <template>
   <div class="big-div p-4 text-center">
-    <h2>Product list - 
+    <h2>Product list -
       <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.0" viewBox="0 0 800 167.326"
         class="nav__logo-svg nav__logo-svg--red" width="100" height="25">
         <g id="canon-logo">
@@ -47,34 +47,61 @@
           <td>{{ product.weight }}</td>
           <td>{{ product.release_date }}</td>
           <td>{{ product.is_available ? "✅" : "❌" }}</td>
-          <td>{{ product.meta_created_date.split("T")[0] + " - " + product.meta_created_date.split("T")[1].split(".")[0] }}
+          <td>{{ product.meta_created_date.split("T")[0] + " - " + product.meta_created_date.split("T")[1].split(".")[0]
+            }}
           </td>
         </tr>
       </tbody>
     </table>
-    <button id="add">
-      Add a product
-    </button>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <hr>
+    <button id="add" @click="showForm = !showForm">Add a product</button>
+    <CreateProduct v-if="showForm" @close="onProductCreated" />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import CreateProduct from "./CreateProduct.vue";
 
 const products = ref([]);
+const showForm = ref(false);
 
-onMounted(() => {
+const fetchProducts = () => {
   axios
     .get("/api/product/")
     .then((response) => {
-      console.log("Réponse reçue :", response.data);
       products.value = response.data;
     })
     .catch((error) => {
       console.error("Erreur lors de la récupération des données :", error);
     });
-});
+};
+
+onMounted(fetchProducts);
+
+const onProductCreated = () => {
+  showForm.value = false;
+  fetchProducts();
+};
+
 </script>
 
 <style scoped>
